@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{1041ef14-c065-473a-a897-e1805593952e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{c92c9867-9f9a-4239-b0c4-97f0a8419805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="modelLoader">
+      <UniqueIdentifier>{2aba1289-e0a6-44db-b64e-f678601799f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HelperClasses">
+      <UniqueIdentifier>{76f3e80f-f8f9-4ba3-acdd-33c4549ad6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{d4a29ecd-e7d4-4b14-8ab6-26b5fa9eb288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Container">
+      <UniqueIdentifier>{9cd71048-ea5b-41f6-bc16-01c33c395441}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="modelLoader.cpp">
+      <Filter>modelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Vec3f.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="shaders.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Container.cpp">
+      <Filter>Container</Filter>
+    </ClCompile>
+    <ClCompile Include="matrix4x4.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ppf.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="KDTree.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="modelLoader.h">
+      <Filter>modelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec3f.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="shaders.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Container.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix4x4.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ppf.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="KDTree.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fs.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\vs.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\p_FS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\p_VS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\i_FS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\i_VS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

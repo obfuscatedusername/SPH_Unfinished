@@ -4,7 +4,7 @@
 #include "Vec3f.h"
 #include "modelLoader.h"
 
-const static float p_Scale = 0.02f;
+const static float p_Scale = 0.015f;
 
 class Particle{
 	private:
@@ -25,17 +25,20 @@ public:
 	void Render();
 	void UpdateMV(Vec3f);
 	void RemoveNeighbourIndex(unsigned int);
+	//void UpdateParticle(Particle*);
 
 	//Getters
 	float GetRadius(){return radius;}
 	bool GetBoundCheck(){return inBounds;}
 	model* GetModel(){return p_Model;}
 	Vec3f GetColour(){return colour;};
+	glm::vec3 GetColourGLM(){return glm::vec3(colour.x, colour.y, colour.z);}
 	glm::mat4 GetMVM(){return ModelView;}
 	Vec3f GetPosition(){return pos;}
 	glm::vec3 GetPositionGLM(){return glm::vec3(pos.x, pos.y, pos.z);}
 	float GetScale(){return p_Scale;}
 	std::vector<unsigned int> GetNeighbourIndexes(){return n_Indexes;}
+	Vec3f GetVelocity(){ return velocity;}
 	
 	//Setters
 	void SetPosition(Vec3f p){pos = p; UpdateMV(p);}

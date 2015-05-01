@@ -90,6 +90,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matrix4x4.cpp" />
     <ClCompile Include="modelLoader.cpp" />
+    <ClCompile Include="OcTree.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ppf.cpp" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="matrix4x4.h" />
     <ClInclude Include="modelLoader.h" />
+    <ClInclude Include="OctTree.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ppf.h" />

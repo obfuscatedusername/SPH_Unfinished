@@ -28,6 +28,7 @@ class Vec3f {
 		
 		float magnitude() const;
 		float magnitudeSquared() const;
+		float Length() const;
 		Vec3f normalize() const;
 		Vec3f getNormal(float edgePoint0X, float edgePoint0Z, float edgePoint1X, float edgePoint1Z);
 		float dot(const Vec3f &other) const;

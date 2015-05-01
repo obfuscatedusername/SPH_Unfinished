@@ -13,7 +13,7 @@ Camera::Camera(){
 Camera::Camera(glm::vec3 p, float fov, float ar, float np, float fp){
 	m_Position	= p;
 	m_Origin	= p;
-	v_Angle		= 35.0f;
+	v_Angle		= 15.0f;
 	h_Angle		= 0.0f;
 	FOV			= fov;
 	nearPlane	= np;
@@ -24,7 +24,7 @@ Camera::Camera(glm::vec3 p, float fov, float ar, float np, float fp){
 
 void Camera::Reset(){
 	m_Position	=	m_Origin;
-	v_Angle		= 35.0f;
+	v_Angle		= 15.0f;
 	h_Angle		= 0.0f;
 	FOV			= 45.0f;
 	nearPlane	= 0.1f;

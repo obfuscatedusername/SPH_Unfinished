@@ -6,7 +6,7 @@
 #include <GLFW\glfw3.h>
 #include <vector>
 
-#define HEIGHT 1
+#define HEIGHT 0.5
 #define WIDTH 0.5
 
 struct BB{

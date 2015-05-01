@@ -105,6 +105,31 @@ void shaders::UseShader(GLuint program, glm::mat4 M, Camera* Cam, Vec3f l_Pos, V
 
 
 
+//current shader for the instanced particles. 
+void shaders::UseShaderInstanced(GLuint program, Camera* Cam, Vec3f l_Pos, Vec3f l_Int, float l_Ac, float l_At){
+
+	glUseProgram(program);
+	glUniformMatrix4fv(glGetUniformLocation(program, "Camera"), 1, GL_FALSE, &Cam->Matrix()[0][0]);
+	glUniform3f(glGetUniformLocation(program, "camPos"), Cam->GetPosition().x, Cam->GetPosition().y, Cam->GetPosition().z);
+	
+	glUniform3f(glGetUniformLocation(program, "light.pos"), l_Pos.x, l_Pos.y, l_Pos.z);
+	glUniform3f(glGetUniformLocation(program, "light.intensity"), l_Int.x, l_Int.y, l_Int.z);
+	glUniform1f(glGetUniformLocation(program, "light.ambCoef"), l_Ac);
+	glUniform1f(glGetUniformLocation(program, "light.atten"), l_At);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 //void shaders::UseShaderInstanced(GLuint program, Camera* Cam, GLuint insCount, vector<glm::vec4>* IP, vector<glm::mat4>* iMV, Vec3f l_Pos, Vec3f l_Int, float l_Ac, float l_At){
 //	glUseProgram(program);
 //
@@ -130,30 +155,30 @@ void shaders::UseShader(GLuint program, glm::mat4 M, Camera* Cam, Vec3f l_Pos, V
 
 
 //current shader for the instanced particles. 
-void shaders::UseShaderInstanced(GLuint program, Camera* Cam, GLuint insCount, vector<glm::vec4>* IP, vector<glm::mat4>* iMV, 
-								 Vec3f l_Pos, Vec3f l_Int, float l_Ac, float l_At, std::vector<Particle>* ps){
-	glUseProgram(program);
-
-	for(size_t i = 0; i < insCount; i++)
-	{
-		string index = std::to_string(i);
-		GLuint loc = glGetUniformLocation(program, ("i_M["+index+"]").c_str());
-		glUniformMatrix4fv(loc, 1, GL_FALSE, &iMV->at(i)[0][0]);
-
-		loc = glGetUniformLocation(program, ("i_P["+index+"]").c_str());
-		glUniform4f(loc, IP->at(i).x, IP->at(i).y, IP->at(i).z, IP->at(i).w);
-
-		Vec3f col = ps->at(i).GetColour();
-		loc = glGetUniformLocation(program, ("i_C["+index+"]").c_str());
-		glUniform3f(loc, col.x , col.y, col.z);
-	}
-	
-	glUniformMatrix4fv(glGetUniformLocation(program, "Camera"), 1, GL_FALSE, &Cam->Matrix()[0][0]);
-	glUniform3f(glGetUniformLocation(program, "camPos"), Cam->GetPosition().x, Cam->GetPosition().y, Cam->GetPosition().z);
-	
-	glUniform3f(glGetUniformLocation(program, "light.pos"), l_Pos.x, l_Pos.y, l_Pos.z);
-	glUniform3f(glGetUniformLocation(program, "light.intensity"), l_Int.x, l_Int.y, l_Int.z);
-	glUniform1f(glGetUniformLocation(program, "light.ambCoef"), l_Ac);
-	glUniform1f(glGetUniformLocation(program, "light.atten"), l_At);
-
-}
+//void shaders::UseShaderInstanced(GLuint program, Camera* Cam, GLuint insCount, vector<glm::vec4>* IP, vector<glm::mat4>* iMV, 
+//								 Vec3f l_Pos, Vec3f l_Int, float l_Ac, float l_At, std::vector<Particle>* ps){
+//	glUseProgram(program);
+//
+//	for(size_t i = 0; i < insCount; i++)
+//	{
+//		string index = std::to_string(i);
+//		GLuint loc = glGetUniformLocation(program, ("i_M["+index+"]").c_str());
+//		glUniformMatrix4fv(loc, 1, GL_FALSE, &iMV->at(i)[0][0]);
+//
+//		loc = glGetUniformLocation(program, ("i_P["+index+"]").c_str());
+//		glUniform4f(loc, IP->at(i).x, IP->at(i).y, IP->at(i).z, IP->at(i).w);
+//
+//		Vec3f col = ps->at(i).GetColour();
+//		loc = glGetUniformLocation(program, ("i_C["+index+"]").c_str());
+//		glUniform3f(loc, col.x , col.y, col.z);
+//	}
+//	
+//	glUniformMatrix4fv(glGetUniformLocation(program, "Camera"), 1, GL_FALSE, &Cam->Matrix()[0][0]);
+//	glUniform3f(glGetUniformLocation(program, "camPos"), Cam->GetPosition().x, Cam->GetPosition().y, Cam->GetPosition().z);
+//	
+//	glUniform3f(glGetUniformLocation(program, "light.pos"), l_Pos.x, l_Pos.y, l_Pos.z);
+//	glUniform3f(glGetUniformLocation(program, "light.intensity"), l_Int.x, l_Int.y, l_Int.z);
+//	glUniform1f(glGetUniformLocation(program, "light.ambCoef"), l_Ac);
+//	glUniform1f(glGetUniformLocation(program, "light.atten"), l_At);
+//
+//}

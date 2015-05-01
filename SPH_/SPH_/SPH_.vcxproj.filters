@@ -63,6 +63,9 @@
     <ClCompile Include="KDTree.cpp">
       <Filter>HelperClasses</Filter>
     </ClCompile>
+    <ClCompile Include="OcTree.cpp">
+      <Filter>HelperClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="modelLoader.h">
@@ -102,6 +105,9 @@
       <Filter>HelperClasses</Filter>
     </ClInclude>
     <ClInclude Include="KDTree.h">
+      <Filter>HelperClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="OctTree.h">
       <Filter>HelperClasses</Filter>
     </ClInclude>
   </ItemGroup>

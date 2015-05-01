@@ -47,9 +47,9 @@ enum attrib{
 
 // Though attributes, these cannot follow the enum convention above as they need four instances
 // each thus they are defined instead, may need updating if more enums are added!
-#define 	i_PosAt		8	// WVP Matrix for instanced rendering = 8 positions
-#define		worldMat	12   //World Matrix for instanced rendering = 9 
-
+#define 	i_PosAt		10	// WVP Matrix for instanced rendering = 10
+#define		i_WMAt		11  //World Matrix for instanced rendering = 11, 12, 13, 14 
+#define     i_ColAt		15  //Individual pixel colour for instanced rendering = 15
 //This struct holds all the variables pertaining to materials
 struct mat{
 	float diff[4];
@@ -83,7 +83,7 @@ struct boneInfo{
 struct sMesh{
 	GLuint vao, numFaces, numInd, numVert, 
 			matInd, ibo, vbo, nbo, tbo, bbo, *indexes,
-			i_Pos, ind_WorldMat;
+			i_Pos, i_WM, i_Col;
 	GLfloat *verts, *texCoords, *normals;
 	bool indexed, hasNorm, hasTexCoords, hasBones;
 	size_t baseVert, baseInd;
@@ -129,7 +129,8 @@ public:
 	void makeVAO(model* m);
 	void freeModel(model* m);
 	void renderModel(model* m);
-	void RenderIModel(model*, size_t); //Instanced Render Function
+	void RenderIModel(model*, size_t,std::vector<glm::vec4>*, std::vector<glm::mat4>*, std::vector<glm::vec3>*); //Instanced Render Function
+	void RenderIModel(model*, size_t,const glm::mat4*, const  glm::vec4*, const glm::vec3*);
 	glm::vec3 getCentre(model* m);
 	vector<glm::vec3> getMinMaxTing(model* m);
 	void boneTransform(float secs, vector<Matrix_4f>& transforms, int anim, float& anTime);

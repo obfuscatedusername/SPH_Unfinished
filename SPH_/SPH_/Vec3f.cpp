@@ -128,6 +128,10 @@ Vec3f Vec3f::getNormal(float edgePoint0X, float edgePoint0Z, float edgePoint1X, 
 	return Vec3f(nX, 0, nZ );
 }
 
+float Vec3f::Length() const{
+	return sqrt(x * x + y * y + z * z);
+}
+
 float Vec3f::dot(const Vec3f &other) const {
 	return x * other.x + y * other.y + z * other.z;
 }

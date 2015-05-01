@@ -128,7 +128,8 @@ model* modelLoader::loadModel(char* file, bool ins){
 	theModel->numMesh = theScene->mNumMeshes;
 	//load the vertices, normals and textures for the model
 	loadVert(theModel, theScene);
-	//create the VAOs and VBOs associated with the model
+	//create the VAOs and VBOs associated with the model (INSTANCED YO)
+	//makeIRVAO(theModel);
 	makeVAO(theModel);
 	//if there are materials, use SOIL to load them
 	if(theScene->HasMaterials()){
@@ -353,28 +354,25 @@ void modelLoader::makeVAO(model* m)
 		}
 		//Generate the necessary ting for Instanced Rendering if it should do so (*,*)
 		if(m->instanced){
-
-			//Create and bind a buffer for the WVP Matrix
 			glGenBuffers(1, &theMesh->i_Pos);
 			glBindBuffer(GL_ARRAY_BUFFER, theMesh->i_Pos);
-			char* p = 0;
-			for(size_t j = 0; j < 4; j++){
-				glEnableVertexAttribArray(i_PosAt + j );
-				glVertexAttribPointer(i_PosAt + j, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), p + j * sizeof(glm::vec4));
-				glVertexAttribDivisor(i_PosAt + j, 1);
-			}
-	
-			//Create and bind a buffer for the World Matrix
-			glGenBuffers(1, &theMesh->ind_WorldMat);
-			glBindBuffer(GL_ARRAY_BUFFER, theMesh->ind_WorldMat);
+			glEnableVertexAttribArray(i_PosAt);
+			glVertexAttribPointer(i_PosAt, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const GLvoid*)(sizeof(GL_FLOAT) * 4));
+			glVertexAttribDivisor(i_PosAt, 1);
+			
+			glGenBuffers(1, &theMesh->i_WM);
+			glBindBuffer(GL_ARRAY_BUFFER, theMesh->i_WM);
 			for(size_t i = 0; i < 4; i++){
-				glEnableVertexAttribArray(worldMat);
-				glVertexAttribPointer(	worldMat, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4) * 300,
-										p);
-				glVertexAttribDivisor(worldMat, 1);
+				glEnableVertexAttribArray(i_WMAt + i);
+				glVertexAttribPointer(i_WMAt + i, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (const GLvoid*)(sizeof(GL_FLOAT) * i * 4));
+				glVertexAttribDivisor(i_WMAt + i, 1);
 			}
 
-
+			glGenBuffers(1, &theMesh->i_Col);
+			glBindBuffer(GL_ARRAY_BUFFER, theMesh->i_Col);
+			glEnableVertexAttribArray(i_ColAt);
+			glVertexAttribPointer(i_ColAt, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (const GLvoid*)(sizeof(GL_FLOAT) * 3));
+			glVertexAttribDivisor(i_ColAt, 1);
 		}
 
 		//finally unbind the buffers
@@ -383,6 +381,7 @@ void modelLoader::makeVAO(model* m)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 }
+
 
 void modelLoader::renderModel(model* m)
 {
@@ -420,17 +419,62 @@ void modelLoader::renderModel(model* m)
 }
 
 //currently used instanced model rendering method
-void modelLoader::RenderIModel(model* m, size_t numInst){
+void modelLoader::RenderIModel(model* m, size_t numInst,std::vector<glm::vec4> *ip, std::vector<glm::mat4> *im, std::vector<glm::vec3>* ic){
 	
-	for (size_t i = 0; i< m->numMesh; i++)
-	{
-		glBindVertexArray(m->vMesh[i].vao);
+
+
+	for(size_t i = 0; i < m->numMesh; i++){
+		glBindBuffer(GL_ARRAY_BUFFER, m->vMesh[i].i_WM);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * numInst, &im->front(), GL_DYNAMIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, m->vMesh[i].i_Pos);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * numInst, &ip->front(), GL_DYNAMIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, m->vMesh[i].i_Col);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * numInst, &ic->front(), GL_DYNAMIC_DRAW);
+
+		glBindVertexArray(m->vMesh[i].vao);		
+		//glDrawElementsInstancedBaseVertex(GL_TRIANGLES, 
+		//									m->vMesh[i].numInd, 
+		//									GL_UNSIGNED_INT, 
+		//									(void*)(sizeof(unsigned int) * m->vMesh[i].baseInd), 
+		//									numInst,
+		//									m->vMesh[i].baseVert);
 		glDrawElementsInstanced(GL_TRIANGLES,
-								m->vMesh[i].numInd,
-								GL_UNSIGNED_INT, 
-								0, 
-								numInst);
+							m->vMesh[i].numInd,
+							GL_UNSIGNED_INT, 
+							0, 
+							numInst);
 		glBindVertexArray(0);
+	}
+	
+}
+
+void modelLoader::RenderIModel(model* m, size_t numInst, const glm::mat4* im, const glm::vec4* ip, const glm::vec3* ic){
+	makeVAO(m);
+
+	for(size_t i = 0; i < m->numMesh; i++){
+		glBindBuffer(GL_ARRAY_BUFFER, m->vMesh[i].i_WM);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * numInst, im, GL_DYNAMIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, m->vMesh[i].i_Pos);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4) * numInst, ip, GL_DYNAMIC_DRAW);
+
+		glBindBuffer(GL_ARRAY_BUFFER, m->vMesh[i].i_Col);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * numInst, ic, GL_DYNAMIC_DRAW);
+
+		glBindVertexArray(m->vMesh[i].vao);		
+		//glDrawElementsInstancedBaseVertex(GL_TRIANGLES, 
+		//									m->vMesh[i].numInd, 
+		//									GL_UNSIGNED_INT, 
+		//									(void*)(sizeof(unsigned int) * m->vMesh[i].baseInd), 
+		//									numInst,
+		//									m->vMesh[i].baseVert);
+		glDrawElementsInstanced(GL_TRIANGLES,
+							m->vMesh[i].numInd,
+							GL_UNSIGNED_INT, 
+							0, 
+							numInst);
 	}
 }
 
